@@ -51,7 +51,7 @@ function extractAddressFromPage() {
                 // Check for full address format first
                 const fullAddressPattern = /\d+.*[A-Z]{2}\s+\d{5}/i;
                 if (fullAddressPattern.test(cleanText)) {
-                    return cleanText;
+                    return cleanText.slice(0, -5);
                 }
             }
         }
@@ -63,7 +63,7 @@ function extractAddressFromPage() {
     const fullMatch = allText.match(fullAddressPattern);
 
     if (fullMatch) {
-        return fullMatch[0];
+        return fullMatch[0].slice(0, -5);
     }
 
     return null;

@@ -3,8 +3,11 @@ import logo from "./assets/WattsUpLogo.png";
 import { Tag } from "./components/Tag";
 
 interface EnergyCostData {
-  cost: number;
-  address: string;
+  annual_summary: {
+    average_monthly_bill: number;
+    total_kwh: number;
+    total_bill: number;
+  }
 }
 
 function App() {
@@ -42,7 +45,7 @@ function App() {
   };
 
   const getEnergyCost = async (address: string): Promise<number> => {
-    const API_ENDPOINT = "https://wattsup-0o1v.onrender.com/api/estimate";
+    const API_ENDPOINT = "http://127.0.0.1:5002/api/estimate";
 
     try {
       const response = await fetch(API_ENDPOINT, {
@@ -58,7 +61,7 @@ function App() {
       }
 
       const data: EnergyCostData = await response.json();
-      return data.cost || 0;
+      return data.annual_summary.average_monthly_bill || 0;
     } catch {
       return 0;
     }
@@ -85,6 +88,7 @@ function App() {
   useEffect(() => {
     extractAddress()
       .then(setAddress)
+      .then(calculateEnergyCost)
       .catch((err) =>
         setError(
           err instanceof Error ? err.message : "Failed to extract address"
@@ -137,12 +141,12 @@ function App() {
             {error}
           </div>
         )}
-        <button
+        {/* <button
           onClick={calculateEnergyCost}
           className="w-full mt-2 py-2 px-4 bg-green-600 hover:bg-green-700 text-white font-semibold rounded-lg shadow transition-colors duration-150"
         >
           Calculate
-        </button>
+        </button> */}
       </div>
     </div>
   );
