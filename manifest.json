@@ -1,0 +1,27 @@
+{
+    "manifest_version": 3,
+    "name": "WattsUp - Energy Cost Calculator",
+    "version": "1.0.0",
+    "description": "Calculate monthly energy costs for StreetEasy listings",
+    "permissions": [
+        "activeTab",
+        "scripting"
+    ],
+    "host_permissions": [
+        "https://streeteasy.com/*"
+    ],
+    "action": {
+        "default_popup": "index.html",
+        "default_title": "WattsUp Energy Calculator"
+    },
+    "content_scripts": [
+        {
+            "matches": [
+                "https://streeteasy.com/*"
+            ],
+            "js": [
+                "content.js"
+            ]
+        }
+    ]
+}
